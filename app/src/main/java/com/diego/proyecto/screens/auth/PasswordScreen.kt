@@ -42,11 +42,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.Image
-import androidx.compose.material.icons.filled.Visibility
-import androidx.compose.material.icons.filled.VisibilityOff
-import androidx.compose.material3.IconButton
+import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.navigation.NavController
 import com.diego.proyecto.R
 import com.diego.proyecto.navigation.ScreenRoutes
@@ -56,11 +54,10 @@ import com.diego.proyecto.ui.theme.ColorFondoInicio
 import com.diego.proyecto.ui.theme.ColorTextoBlanco
 import com.diego.proyecto.ui.theme.ColorTextoNegro
 @Composable
-fun LoginScreen(navController: NavController) {
+fun PasswordScreen(navController: NavController) {
 
     var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
-    var passwordVisible by remember { mutableStateOf(false) }
+    var name by remember { mutableStateOf("") }
 
     val gradientBrush = Brush.verticalGradient(
         colors = listOf(ColorFondoInicio, ColorFondoFin)
@@ -89,6 +86,25 @@ fun LoginScreen(navController: NavController) {
             Spacer(modifier = Modifier.height(70.dp))
 
             TextField(
+                value = name,
+                onValueChange = { name = it },
+                modifier = Modifier.fillMaxWidth(),
+                label = { Text("Name") },
+                leadingIcon = {
+                    Icon(
+                        imageVector = Icons.Default.Person,
+                        contentDescription = "User Icon",
+                        tint = ColorTextoBlanco
+                    )
+                },
+                colors = textFieldColors(),
+                singleLine = true,
+                visualTransformation = PasswordVisualTransformation()
+            )
+
+            Spacer(modifier = Modifier.height(45.dp))
+
+            TextField(
                 value = email,
                 onValueChange = { email = it },
                 modifier = Modifier.fillMaxWidth(),
@@ -104,65 +120,23 @@ fun LoginScreen(navController: NavController) {
                 singleLine = true
             )
 
-            Spacer(modifier = Modifier.height(45.dp))
-
-            TextField(
-                value = password,
-                onValueChange = { password = it },
-                modifier = Modifier.fillMaxWidth(),
-                label = { Text("Password") },
-                leadingIcon = {
-                    Icon(
-                        imageVector = Icons.Default.Lock,
-                        contentDescription = "Password Icon",
-                        tint = ColorTextoBlanco
-                    )
-                },
-                colors = textFieldColors(),
-                singleLine = true,
-                visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-
-                trailingIcon = {
-                    val image = if (passwordVisible)
-                        Icons.Filled.Visibility
-                    else
-                        Icons.Filled.VisibilityOff
-
-                    IconButton(onClick = { passwordVisible = !passwordVisible }) {
-                        Icon(
-                            imageVector = image,
-                            contentDescription = "Toggle password visibility",
-                            tint = ColorTextoBlanco
-                        )
-                    }
-                }
-            )
-
             Spacer(modifier = Modifier.height(50.dp))
 
             Button(
                 onClick = {
-                    Log.d("LoginScreen", "Email: $email, Pass: $password")
+                    Log.d("PasswordScreen", "Email: $email, Pass: $name")
                 },
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(50),
                 colors = ButtonDefaults.buttonColors(containerColor = ColorTextoBlanco)
             ) {
                 Text(
-                    text = "Log In",
+                    text = "Restart Password",
                     color = ColorTextoNegro,
                     fontSize = 20.sp,
                     modifier = Modifier.padding(vertical = 8.dp)
                 )
             }
-
-            Spacer(modifier = Modifier.height(15.dp))
-
-            ClickablePasswordText(navController = navController)
-
-            Spacer(modifier = Modifier.height(160.dp))
-
-            ClickableRegisterText(navController = navController)
         }
     }
 }
@@ -179,56 +153,3 @@ private fun textFieldColors() = TextFieldDefaults.colors(
     focusedIndicatorColor = ColorTextoBlanco,
     unfocusedIndicatorColor = Color.LightGray
 )
-
-@Composable
-private fun ClickableRegisterText(navController: NavController) {
-    val annotatedString = buildAnnotatedString {
-        withStyle(style = SpanStyle(color = Color.LightGray, fontSize = 16.sp)) {
-            append("Don't have an account? ")
-        }
-
-        pushStringAnnotation(tag = "REGISTER", annotation = "register")
-        withStyle(style = SpanStyle(color = ColorButton, fontWeight = FontWeight.Bold, fontSize = 16.sp)) {
-            append("Register")
-        }
-        pop()
-    }
-
-    ClickableText(
-        text = annotatedString,
-        onClick = { offset ->
-            annotatedString.getStringAnnotations(tag = "REGISTER", start = offset, end = offset)
-                .firstOrNull()?.let {
-                    Log.d("LoginScreen", "Clicked on Register")
-                    navController.navigate(ScreenRoutes.REGISTER_SCREEN)
-                }
-        },
-        modifier = Modifier.fillMaxWidth(),
-        style = TextStyle(textAlign = TextAlign.Center)
-    )
-}
-
-@Composable
-private fun ClickablePasswordText(navController: NavController) {
-    val annotatedString = buildAnnotatedString {
-
-        pushStringAnnotation(tag = "PASSWORD", annotation = "password")
-        withStyle(style = SpanStyle(color = ColorButton, fontWeight = FontWeight.Bold, fontSize = 18.sp)) {
-            append("Forgot Password?")
-        }
-        pop()
-    }
-
-    ClickableText(
-        text = annotatedString,
-        onClick = { offset ->
-            annotatedString.getStringAnnotations(tag = "PASSWORD", start = offset, end = offset)
-                .firstOrNull()?.let {
-                    Log.d("PasswordScreen", "Clicked on password")
-                    navController.navigate(ScreenRoutes.PASSWORD_SCREEN)
-                }
-        },
-        modifier = Modifier.fillMaxWidth(),
-        style = TextStyle(textAlign = TextAlign.Center)
-    )
-}

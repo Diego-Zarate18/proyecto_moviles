@@ -1,6 +1,7 @@
 package com.diego.proyecto.screens.auth
 
 import android.util.Log
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -15,9 +16,13 @@ import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -30,34 +35,31 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.foundation.Image
-import androidx.compose.material.icons.filled.Visibility
-import androidx.compose.material.icons.filled.VisibilityOff
-import androidx.compose.material3.IconButton
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.diego.proyecto.R
-import com.diego.proyecto.navigation.ScreenRoutes
 import com.diego.proyecto.ui.theme.ColorButton
 import com.diego.proyecto.ui.theme.ColorFondoFin
 import com.diego.proyecto.ui.theme.ColorFondoInicio
 import com.diego.proyecto.ui.theme.ColorTextoBlanco
 import com.diego.proyecto.ui.theme.ColorTextoNegro
-@Composable
-fun LoginScreen(navController: NavController) {
 
+@Composable
+fun RegisterScreen(navController: NavController) {
+
+    var name by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var passwordVisible by remember { mutableStateOf(false) }
@@ -87,6 +89,24 @@ fun LoginScreen(navController: NavController) {
             )
 
             Spacer(modifier = Modifier.height(70.dp))
+
+            TextField(
+                value = name,
+                onValueChange = { name = it },
+                modifier = Modifier.fillMaxWidth(),
+                label = { Text("Name") },
+                leadingIcon = {
+                    Icon(
+                        imageVector = Icons.Default.Person,
+                        contentDescription = "Name Icon",
+                        tint = ColorTextoBlanco
+                    )
+                },
+                colors = textFieldColors(),
+                singleLine = true
+            )
+
+            Spacer(modifier = Modifier.height(45.dp))
 
             TextField(
                 value = email,
@@ -121,7 +141,6 @@ fun LoginScreen(navController: NavController) {
                 colors = textFieldColors(),
                 singleLine = true,
                 visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-
                 trailingIcon = {
                     val image = if (passwordVisible)
                         Icons.Filled.Visibility
@@ -142,27 +161,23 @@ fun LoginScreen(navController: NavController) {
 
             Button(
                 onClick = {
-                    Log.d("LoginScreen", "Email: $email, Pass: $password")
+                    Log.d("RegisterScreen", "Name: $name, Email: $email, Pass: $password")
                 },
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(50),
                 colors = ButtonDefaults.buttonColors(containerColor = ColorTextoBlanco)
             ) {
                 Text(
-                    text = "Log In",
+                    text = "Sing Up",
                     color = ColorTextoNegro,
                     fontSize = 20.sp,
                     modifier = Modifier.padding(vertical = 8.dp)
                 )
             }
 
-            Spacer(modifier = Modifier.height(15.dp))
+            Spacer(modifier = Modifier.height(100.dp))
 
-            ClickablePasswordText(navController = navController)
-
-            Spacer(modifier = Modifier.height(160.dp))
-
-            ClickableRegisterText(navController = navController)
+            ClickableLoginText(navController = navController)
         }
     }
 }
@@ -181,15 +196,15 @@ private fun textFieldColors() = TextFieldDefaults.colors(
 )
 
 @Composable
-private fun ClickableRegisterText(navController: NavController) {
+private fun ClickableLoginText(navController: NavController) {
     val annotatedString = buildAnnotatedString {
         withStyle(style = SpanStyle(color = Color.LightGray, fontSize = 16.sp)) {
-            append("Don't have an account? ")
+            append("Already have an account? ")
         }
 
-        pushStringAnnotation(tag = "REGISTER", annotation = "register")
+        pushStringAnnotation(tag = "LOGIN", annotation = "login")
         withStyle(style = SpanStyle(color = ColorButton, fontWeight = FontWeight.Bold, fontSize = 16.sp)) {
-            append("Register")
+            append("Log In")
         }
         pop()
     }
@@ -197,35 +212,11 @@ private fun ClickableRegisterText(navController: NavController) {
     ClickableText(
         text = annotatedString,
         onClick = { offset ->
-            annotatedString.getStringAnnotations(tag = "REGISTER", start = offset, end = offset)
+            annotatedString.getStringAnnotations(tag = "LOGIN", start = offset, end = offset)
                 .firstOrNull()?.let {
-                    Log.d("LoginScreen", "Clicked on Register")
-                    navController.navigate(ScreenRoutes.REGISTER_SCREEN)
-                }
-        },
-        modifier = Modifier.fillMaxWidth(),
-        style = TextStyle(textAlign = TextAlign.Center)
-    )
-}
+                    Log.d("RegisterScreen", "Clicked on Log In")
 
-@Composable
-private fun ClickablePasswordText(navController: NavController) {
-    val annotatedString = buildAnnotatedString {
-
-        pushStringAnnotation(tag = "PASSWORD", annotation = "password")
-        withStyle(style = SpanStyle(color = ColorButton, fontWeight = FontWeight.Bold, fontSize = 18.sp)) {
-            append("Forgot Password?")
-        }
-        pop()
-    }
-
-    ClickableText(
-        text = annotatedString,
-        onClick = { offset ->
-            annotatedString.getStringAnnotations(tag = "PASSWORD", start = offset, end = offset)
-                .firstOrNull()?.let {
-                    Log.d("PasswordScreen", "Clicked on password")
-                    navController.navigate(ScreenRoutes.PASSWORD_SCREEN)
+                    navController.popBackStack()
                 }
         },
         modifier = Modifier.fillMaxWidth(),
