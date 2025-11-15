@@ -51,8 +51,8 @@ import androidx.navigation.NavController
 import com.diego.proyecto.R
 import com.diego.proyecto.navigation.ScreenRoutes
 import com.diego.proyecto.ui.theme.ColorButton
-import com.diego.proyecto.ui.theme.ColorFondoFin
-import com.diego.proyecto.ui.theme.ColorFondoInicio
+import com.diego.proyecto.ui.theme.ColorFin
+import com.diego.proyecto.ui.theme.ColorInicio
 import com.diego.proyecto.ui.theme.ColorTextoBlanco
 import com.diego.proyecto.ui.theme.ColorTextoNegro
 @Composable
@@ -63,7 +63,7 @@ fun LoginScreen(navController: NavController) {
     var passwordVisible by remember { mutableStateOf(false) }
 
     val gradientBrush = Brush.verticalGradient(
-        colors = listOf(ColorFondoInicio, ColorFondoFin)
+        colors = listOf(ColorInicio, ColorFin)
     )
 
     Box(
