@@ -75,7 +75,7 @@ fun LoginScreen(navController: NavController) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 40.dp),
+                .padding(horizontal = 55.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
@@ -86,7 +86,7 @@ fun LoginScreen(navController: NavController) {
                 modifier = Modifier.height(60.dp)
             )
 
-            Spacer(modifier = Modifier.height(70.dp))
+            Spacer(modifier = Modifier.height(60.dp))
 
             TextField(
                 value = email,
@@ -152,7 +152,7 @@ fun LoginScreen(navController: NavController) {
                     text = "Log In",
                     color = ColorTextoNegro,
                     fontSize = 20.sp,
-                    modifier = Modifier.padding(vertical = 8.dp)
+                    modifier = Modifier.padding(vertical = 6.dp)
                 )
             }
 

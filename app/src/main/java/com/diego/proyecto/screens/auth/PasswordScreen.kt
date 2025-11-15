@@ -72,7 +72,7 @@ fun PasswordScreen(navController: NavController) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 40.dp),
+                .padding(horizontal = 55.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
@@ -83,7 +83,7 @@ fun PasswordScreen(navController: NavController) {
                 modifier = Modifier.height(60.dp)
             )
 
-            Spacer(modifier = Modifier.height(70.dp))
+            Spacer(modifier = Modifier.height(60.dp))
 
             TextField(
                 value = name,
@@ -134,7 +134,7 @@ fun PasswordScreen(navController: NavController) {
                     text = "Restart Password",
                     color = ColorTextoNegro,
                     fontSize = 20.sp,
-                    modifier = Modifier.padding(vertical = 8.dp)
+                    modifier = Modifier.padding(vertical = 6.dp)
                 )
             }
         }
