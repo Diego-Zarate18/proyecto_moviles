@@ -3,6 +3,7 @@ package com.diego.proyecto.ui.components
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.MoreHoriz
 import androidx.compose.material3.Icon
@@ -21,11 +22,12 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import com.diego.proyecto.navigation.ScreenRoutes
 import com.diego.proyecto.ui.theme.ColorButton
 import com.diego.proyecto.ui.theme.ColorFondoInicio
+import com.diego.proyecto.ui.theme.ColorIconsBar
 import com.diego.proyecto.ui.theme.ColorTextoBlanco
 
 sealed class BottomNavItem(val route: String, val icon: ImageVector, val label: String) {
     object Home : BottomNavItem(ScreenRoutes.HOME_SCREEN, Icons.Default.Home, "Inicio")
-    object Add : BottomNavItem(ScreenRoutes.NEW_PRACTICE_SCREEN, Icons.Default.Add, "Nuevo")
+    object Add : BottomNavItem(ScreenRoutes.NEW_PRACTICE_SCREEN, Icons.Default.AddCircle, "")
     object More : BottomNavItem(ScreenRoutes.PROFILE_SCREEN, Icons.Default.MoreHoriz, "Más")
 }
 
@@ -54,8 +56,8 @@ fun BottomNavigationBar(navController: NavController) {
                         Icon(
                             imageVector = item.icon,
                             contentDescription = item.label,
-                            modifier = Modifier.size(32.dp),
-                            tint = if (isSelected) ColorFondoInicio else ColorButton
+                            modifier = Modifier.size(40.dp),
+                            tint = if (isSelected) ColorTextoBlanco else ColorIconsBar
                         )
                     } else {
                         Icon(imageVector = item.icon, contentDescription = item.label)
@@ -76,8 +78,8 @@ fun BottomNavigationBar(navController: NavController) {
                 },
                 colors = NavigationBarItemDefaults.colors(
                     selectedIconColor = ColorFondoInicio,
-                    selectedTextColor = ColorButton,
-                    indicatorColor = ColorButton,
+                    selectedTextColor = ColorIconsBar,
+                    indicatorColor = ColorIconsBar,
                     unselectedIconColor = Color.Gray,
                     unselectedTextColor = Color.Gray
                 )
