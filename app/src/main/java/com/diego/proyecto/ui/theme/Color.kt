@@ -10,9 +10,17 @@ val PurpleGrey40 = Color(0xFF625b71)
 val Pink40 = Color(0xFF7D5260)
 
 
-val ColorFondoInicio = Color(0xFF000000)
-val ColorFondoFin = Color(0xFF4D917C)
+val ColorFondoInicio = Color(0xFF262626)
+val ColorInicio = Color(0xFF000000)
+val ColorFin = Color(0xFF4D917C)
 
 val ColorTextoBlanco = Color(0xFFFFFFFF)
 val ColorTextoNegro = Color(0xFF000000)
 val ColorButton = Color(0xFF002203)
+val ColorIconsBar = Color(0xFF00E5B8)
+val ColorWeek = Color(0xFF4D917C)
+
+// New colors for Practice screens
+val DarkBackground = ColorFondoInicio
+val DarkGreyBox = Color(0xFF353535)
+val GreenButton = ColorIconsBar

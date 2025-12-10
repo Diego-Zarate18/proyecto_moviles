@@ -7,6 +7,7 @@ import androidx.navigation.compose.rememberNavController
 import com.diego.proyecto.screens.auth.LoginScreen
 import com.diego.proyecto.screens.auth.PasswordScreen
 import com.diego.proyecto.screens.auth.RegisterScreen
+import com.diego.proyecto.screens.practice.NewPracticeScreen
 
 @Composable
 fun AppNavigation() {
@@ -14,7 +15,7 @@ fun AppNavigation() {
 
     NavHost(
         navController = navController,
-        startDestination = ScreenRoutes.LOGIN_SCREEN
+        startDestination = ScreenRoutes.NEW_PRACTICE_SCREEN
     ) {
 
         composable(route = ScreenRoutes.LOGIN_SCREEN) {
@@ -27,6 +28,10 @@ fun AppNavigation() {
 
         composable(route = ScreenRoutes.PASSWORD_SCREEN){
             PasswordScreen(navController = navController)
+        }
+
+        composable(route = ScreenRoutes.NEW_PRACTICE_SCREEN) {
+            NewPracticeScreen()
         }
     }
 }
