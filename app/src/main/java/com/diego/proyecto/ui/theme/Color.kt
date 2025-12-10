@@ -16,3 +16,8 @@ val ColorFondoFin = Color(0xFF4D917C)
 val ColorTextoBlanco = Color(0xFFFFFFFF)
 val ColorTextoNegro = Color(0xFF000000)
 val ColorButton = Color(0xFF002203)
+
+// Nuevos colores solicitados
+val ColorFondoApp = Color(0xFF262626)
+val ColorResaltadoDia = Color(0xFF8743A3)
+val ColorBotonMas = Color(0xFF559F88)
