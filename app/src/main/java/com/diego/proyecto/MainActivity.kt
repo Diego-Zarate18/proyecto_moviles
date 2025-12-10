@@ -12,7 +12,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.diego.proyecto.navigation.AppNavigation
-import com.diego.proyecto.screens.auth.LoginScreen
 import com.diego.proyecto.ui.theme.ProyectoTheme
 
 class MainActivity : ComponentActivity() {
