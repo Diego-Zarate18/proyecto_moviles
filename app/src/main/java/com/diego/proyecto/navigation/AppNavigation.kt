@@ -7,7 +7,6 @@ import androidx.navigation.compose.rememberNavController
 import com.diego.proyecto.screens.auth.LoginScreen
 import com.diego.proyecto.screens.auth.PasswordScreen
 import com.diego.proyecto.screens.auth.RegisterScreen
-import com.diego.proyecto.screens.home.HomeScreen
 
 @Composable
 fun AppNavigation() {
@@ -15,7 +14,7 @@ fun AppNavigation() {
 
     NavHost(
         navController = navController,
-        startDestination = ScreenRoutes.HOME_SCREEN // Cambiado temporalmente a HOME_SCREEN para facilitar la visualización, puedes cambiarlo de nuevo a LOGIN_SCREEN
+        startDestination = ScreenRoutes.LOGIN_SCREEN
     ) {
 
         composable(route = ScreenRoutes.LOGIN_SCREEN) {
@@ -28,10 +27,6 @@ fun AppNavigation() {
 
         composable(route = ScreenRoutes.PASSWORD_SCREEN){
             PasswordScreen(navController = navController)
-        }
-
-        composable(route = ScreenRoutes.HOME_SCREEN) {
-            HomeScreen(navController = navController)
         }
     }
 }
