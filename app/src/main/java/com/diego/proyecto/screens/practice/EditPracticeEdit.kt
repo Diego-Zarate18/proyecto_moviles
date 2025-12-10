@@ -3,6 +3,8 @@ package com.diego.proyecto.screens.practice
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -12,18 +14,18 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.diego.proyecto.ui.theme.DarkBackground
-import com.diego.proyecto.ui.theme.DarkGreyBox
-import com.diego.proyecto.ui.theme.GreenButton
 
 @Composable
 fun EditPracticeScreen(initialPractice: PracticeDetails) {
     var practiceName by remember { mutableStateOf(initialPractice.title) }
     var description by remember { mutableStateOf(initialPractice.description) }
-    val lastModification by remember { mutableStateOf("Oct 31, 2025") }
+    var timeHours by remember { mutableStateOf("01") }
+    var timeMinutes by remember { mutableStateOf("00") }
+    var selectedDate by remember { mutableStateOf(initialPractice.date) }
+    var lastModification by remember { mutableStateOf("Oct 31, 2025") }
 
     Scaffold(
-        containerColor = DarkBackground
+        containerColor = DarkBackground,
     ) { paddingValues ->
         Column(
             modifier = Modifier
