@@ -1,6 +1,7 @@
 package com.diego.proyecto.screens.auth
 
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -30,11 +31,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
@@ -44,17 +47,18 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.diego.proyecto.R
+import com.diego.proyecto.data.repository.AuthRepository
+import com.diego.proyecto.navigation.ScreenRoutes
 import com.diego.proyecto.ui.theme.ColorButton
 import com.diego.proyecto.ui.theme.ColorFin
 import com.diego.proyecto.ui.theme.ColorInicio
 import com.diego.proyecto.ui.theme.ColorTextoBlanco
 import com.diego.proyecto.ui.theme.ColorTextoNegro
+import kotlinx.coroutines.launch
 
 @Composable
 fun RegisterScreen(navController: NavController) {
@@ -63,6 +67,10 @@ fun RegisterScreen(navController: NavController) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var passwordVisible by remember { mutableStateOf(false) }
+
+    val scope = rememberCoroutineScope()
+    val context = LocalContext.current
+    val repository = remember { AuthRepository() }
 
     val gradientBrush = Brush.verticalGradient(
         colors = listOf(ColorInicio, ColorFin)
@@ -161,7 +169,16 @@ fun RegisterScreen(navController: NavController) {
 
             Button(
                 onClick = {
-                    Log.d("RegisterScreen", "Name: $name, Email: $email, Pass: $password")
+                    scope.launch {
+                        val response = repository.register(name, email, password)
+                        if (response != null && response.success) {
+                            Log.d("Register", "Success")
+                            Toast.makeText(context, "Registration Successful", Toast.LENGTH_SHORT).show()
+                            navController.navigate(ScreenRoutes.LOGIN_SCREEN)
+                        } else {
+                            Toast.makeText(context, "Registration Failed", Toast.LENGTH_SHORT).show()
+                        }
+                    }
                 },
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(50),
@@ -216,7 +233,9 @@ private fun ClickableLoginText(navController: NavController) {
                 .firstOrNull()?.let {
                     Log.d("RegisterScreen", "Clicked on Log In")
 
-                    navController.popBackStack()
+                    navController.navigate(ScreenRoutes.LOGIN_SCREEN) {
+                        popUpTo(ScreenRoutes.LOGIN_SCREEN) { inclusive = true }
+                    }
                 }
         },
         modifier = Modifier.fillMaxWidth(),

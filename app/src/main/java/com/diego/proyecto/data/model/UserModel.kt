@@ -6,7 +6,7 @@ data class UserModel(
     var email: String,
     var password: String
 ){
-    var practicas: MutableList<PracticeModel> = mutableListOf()
+    var practicas: MutableList<PracticeSession> = mutableListOf()
     var notificaciones: MutableList<NotificationModel> = mutableListOf()
 
     fun register(){}

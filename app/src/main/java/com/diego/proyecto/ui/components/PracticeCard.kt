@@ -24,9 +24,19 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.diego.proyecto.screens.home.Practice
-import com.diego.proyecto.screens.home.dummyPastSessions
 import com.diego.proyecto.ui.theme.ColorTextoBlanco
+
+data class Practice(
+    val title: String,
+    val type: String,
+    val date: String
+)
+
+val dummyPastSessions = listOf(
+    Practice("Práctica de pases", "Fútbol", "2024-05-10"),
+    Practice("Tiros libres", "Baloncesto", "2024-05-08"),
+    Practice("Técnica de crol", "Natación", "2024-05-05")
+)
 
 @Composable
 fun PracticeCard(

@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -63,4 +64,14 @@ dependencies {
     //My dependencies
     implementation(libs.androidx.material.icons.extended.android)
     implementation(libs.androidx.navigation.compose.v277)
+    
+    // Ktor Client
+    implementation(libs.ktor.client.core)
+    implementation(libs.ktor.client.cio)
+    implementation(libs.ktor.client.content.negotiation)
+    implementation(libs.ktor.serialization.kotlinx.json)
+    implementation(libs.ktor.client.logging)
+
+    // Coil para cargar imágenes
+    implementation(libs.coil.compose)
 }

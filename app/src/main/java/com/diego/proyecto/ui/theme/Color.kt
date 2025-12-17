@@ -24,3 +24,8 @@ val ColorWeek = Color(0xFF4D917C)
 val DarkBackground = ColorFondoInicio
 val DarkGreyBox = Color(0xFF353535)
 val GreenButton = ColorIconsBar
+
+// Colors used in HomeScreen
+val ColorFondoApp = ColorFondoInicio
+val ColorResaltadoDia = ColorWeek
+val ColorBotonMas = ColorIconsBar
